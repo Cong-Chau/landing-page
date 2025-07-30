@@ -1,10 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  turbo: false,
-  devIndicators: {
-    buildActivity: false,
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
