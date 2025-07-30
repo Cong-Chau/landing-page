@@ -79,7 +79,12 @@ function Hero() {
           ref={btnRef}
           className="inline-flex p-[2px] rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 mt-16 hover:scale-110 transition-transform duration-300 fade-in-up stagger-4"
         >
-          <button className="flex flex-row items-center gap-2 px-4 py-2 bg-black text-white rounded-2xl hover:bg-transparent transition cursor-pointer">
+          <button
+            onClick={() => {
+              window.location.hash = "feature";
+            }}
+            className="flex flex-row items-center gap-2 px-4 py-2 bg-black text-white rounded-2xl hover:bg-transparent transition cursor-pointer"
+          >
             <span className="text-2xl">Get Started</span>
             <ArrowRight />
           </button>

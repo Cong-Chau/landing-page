@@ -12,6 +12,24 @@ function About() {
   const valuesRef = useRef<HTMLDivElement[]>([]);
   // On view
   useEffect(() => {
+    const updateAnimationClasses = () => {
+      const isSmallScreen = window.innerWidth < 640;
+
+      valuesRef.current.forEach((el, index) => {
+        if (el) {
+          el.classList.remove("fade-in-up", "fade-in-left", "fade-in-right");
+
+          if (isSmallScreen) {
+            const animationClass =
+              index % 2 === 0 ? "fade-in-left" : "fade-in-right";
+            el.classList.add(animationClass);
+          } else {
+            el.classList.add("fade-in-up");
+          }
+        }
+      });
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -24,9 +42,13 @@ function About() {
         });
       },
       {
-        threshold: 0.6,
+        threshold: 0.2,
       }
     );
+
+    updateAnimationClasses();
+
+    window.addEventListener("resize", updateAnimationClasses);
 
     if (titleRef.current) {
       observer.observe(titleRef.current);
@@ -54,6 +76,7 @@ function About() {
 
     return () => {
       observer.disconnect();
+      window.removeEventListener("resize", updateAnimationClasses);
     };
   }, []);
 
@@ -162,10 +185,28 @@ function About() {
         {values.map((value, index) => (
           <div
             ref={(el) => {
-              if (el) valuesRef.current[index] = el;
+              if (el) {
+                valuesRef.current[index] = el;
+
+                const isSmallScreen = window.innerWidth < 640;
+
+                el.classList.remove(
+                  "fade-in-up",
+                  "fade-in-left",
+                  "fade-in-right"
+                );
+
+                if (isSmallScreen) {
+                  const animationClass =
+                    index % 2 === 0 ? "fade-in-left" : "fade-in-right";
+                  el.classList.add(animationClass);
+                } else {
+                  el.classList.add("fade-in-up");
+                }
+              }
             }}
             key={index}
-            className={`max-w-100 text-center p-6 rounded-xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover-lift fade-in`}
+            className={`max-w-100 text-center p-6 rounded-xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover-lift`}
           >
             <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl text-white mb-4 mx-auto">
               {value.icon}

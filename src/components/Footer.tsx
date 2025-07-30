@@ -72,22 +72,18 @@ function Footer() {
     <footer className="bg-[#0D1117] text-gray-300 px-8 py-12">
       {/* Top content */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
-        {/* Left: Logo and description */}
+        {/*Logo and description */}
         <div className="md:col-span-1">
-          <h1
-            ref={title1Ref}
-            className="text-blue-500 font-semibold text-lg mb-4 fade-in"
-          >
-            Maxius
-          </h1>
-          <p
-            ref={title2Ref}
-            className="text-sm leading-relaxed mb-4 fade-in stagger-1"
-          >
-            The only self-developed semiconductor company focused on
-            High-Performance Servers. Leading the global IT industry with
-            innovative server technology solutions.
-          </p>
+          <div ref={title1Ref} className="fade-in ">
+            <h1 className="text-blue-500 font-semibold text-lg mb-4 ">
+              Maxius
+            </h1>
+            <p className="text-sm leading-relaxed mb-4 ">
+              The only self-developed semiconductor company focused on
+              High-Performance Servers. Leading the global IT industry with
+              innovative server technology solutions.
+            </p>
+          </div>
           <div className="flex space-x-2">
             {socialLinks.map((social, index) => (
               <a
@@ -95,7 +91,8 @@ function Footer() {
                   if (el) linksRef.current[index] = el;
                 }}
                 key={index}
-                href={social.href}
+                href="#"
+                onClick={(e) => e.preventDefault()}
                 aria-label={social.label}
                 className={`w-9 h-9 bg-zinc-800 rounded-md flex items-center justify-center hover:bg-blue-600 transition-colors duration-300 fade-in stagger-${
                   1 + index
@@ -107,7 +104,7 @@ function Footer() {
           </div>
         </div>
 
-        {/* Right: Footer links */}
+        {/* Footer links */}
         {Object.entries(footerLinks).map(([category, links], index) => (
           <div
             ref={(el) => {
@@ -120,7 +117,11 @@ function Footer() {
             <ul className="space-y-1 text-sm">
               {links.map((link, idx) => (
                 <li key={idx}>
-                  <a href="#" className="hover:underline text-gray-400">
+                  <a
+                    href="#"
+                    onClick={(e) => e.preventDefault()}
+                    className="hover:underline text-gray-400"
+                  >
                     {link}
                   </a>
                 </li>
@@ -134,13 +135,25 @@ function Footer() {
       <div className="mt-10 border-t border-zinc-700 pt-6 text-sm flex flex-col md:flex-row justify-between max-w-7xl mx-auto text-gray-500">
         <p>© 2025 Maxius. All rights reserved.</p>
         <div className="flex space-x-4 mt-4 md:mt-0">
-          <a href="#" className="hover:underline">
+          <a
+            href="#"
+            onClick={(e) => e.preventDefault()}
+            className="hover:underline"
+          >
             Privacy Policy
           </a>
-          <a href="#" className="hover:underline">
+          <a
+            href="#"
+            onClick={(e) => e.preventDefault()}
+            className="hover:underline"
+          >
             Terms of Service
           </a>
-          <a href="#" className="hover:underline">
+          <a
+            href="#"
+            onClick={(e) => e.preventDefault()}
+            className="hover:underline"
+          >
             Cookie Policy
           </a>
         </div>

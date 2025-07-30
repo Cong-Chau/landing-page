@@ -1,13 +1,49 @@
 "use client";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-import { useEffect, useRef } from "react";
-
+import { useEffect, useRef, useState } from "react";
+import AlertSuccess from "./UI/AlertSuccess";
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({
+    name: false,
+    email: false,
+    message: false,
+  });
+
+  const [showAlert, setShowAlert] = useState(false);
+
   const titleRef = useRef<HTMLDivElement>(null);
   const contentRef1 = useRef<HTMLDivElement>(null);
   const contentRef2 = useRef<HTMLDivElement>(null);
   const listRef = useRef<Array<HTMLDivElement | null>>([]);
   const formRef = useRef<HTMLDivElement>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: false });
+  };
+
+  const handleSubmit = () => {
+    const newErrors = {
+      name: formData.name.trim() === "",
+      email: formData.email.trim() === "",
+      message: formData.message.trim() === "",
+    };
+    setErrors(newErrors);
+
+    const hasError = Object.values(newErrors).some((e) => e);
+    if (!hasError) {
+      setShowAlert(true);
+    }
+  };
+
   // On view
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -22,7 +58,7 @@ function Contact() {
         });
       },
       {
-        threshold: 0.6,
+        threshold: 0.1,
       }
     );
 
@@ -144,39 +180,84 @@ function Contact() {
             </div>
           </div>
         </div>
-
         {/* Right Contact Form */}
         <div
           ref={formRef}
           className="bg-zinc-50 p-8 rounded-2xl shadow-md space-y-6 fade-in-right"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              placeholder="Full Name *"
-              className="px-4 py-3 rounded-md border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-              type="email"
-              placeholder="Email Address *"
-              className="px-4 py-3 rounded-md border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <div className="space-y-1">
+              <input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                type="text"
+                placeholder="Full Name *"
+                className={`px-4 py-3 rounded-md border w-full ${
+                  errors.name ? "border-red-500" : "border-zinc-300"
+                }  `}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm">Full name is required.</p>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <input
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                type="email"
+                placeholder="Email Address *"
+                className={`px-4 py-3 rounded-md border w-full ${
+                  errors.email ? "border-red-500" : "border-zinc-300"
+                } `}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">Email is required.</p>
+              )}
+            </div>
           </div>
+
           <input
+            name="company"
+            value={formData.company}
+            onChange={handleChange}
             type="text"
             placeholder="Company"
-            className="w-full px-4 py-3 rounded-md border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 rounded-md border border-zinc-300"
           />
-          <textarea
-            rows={5}
-            placeholder="Message *"
-            className="w-full px-4 py-3 rounded-md border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          ></textarea>
-          <button className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:opacity-90 transition">
+
+          <div className="space-y-1">
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows={5}
+              placeholder="Message *"
+              className={`w-full px-4 py-3 rounded-md border ${
+                errors.message ? "border-red-500" : "border-zinc-300"
+              } `}
+            ></textarea>
+            {errors.message && (
+              <p className="text-red-500 text-sm">Message is required.</p>
+            )}
+          </div>
+
+          <button
+            onClick={handleSubmit}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:cursor-pointer hover:opacity-90 transition"
+          >
             Send Message <Send className="w-4 h-4" />
           </button>
-        </div>
+        </div>{" "}
       </div>
+      {showAlert && (
+        <AlertSuccess
+          message="Message sent successfully!"
+          onClose={() => setShowAlert(false)}
+        />
+      )}
     </section>
   );
 }
