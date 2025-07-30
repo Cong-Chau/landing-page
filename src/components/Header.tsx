@@ -61,7 +61,7 @@ function Header() {
       <div className="pl-8">
         <span
           onClick={() => handleNavClick("hero")}
-          className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:cursor-pointer"
         >
           MAXIUS
         </span>
