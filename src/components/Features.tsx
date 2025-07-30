@@ -259,7 +259,7 @@ function Features() {
                 }
               }
             }}
-            className="p-8 rounded-2xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 opacity-0 translate-y-8"
+            className="p-8 rounded-2xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-500 transform hover-lift opacity-0 translate-y-8"
             style={{
               animationDelay: `${index * 100 + 600}ms`,
             }}
